@@ -1,12 +1,19 @@
-import { Component, signal } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { initFlowbite } from 'flowbite';
+import { Pizzeria } from './pizzeria/pizzeria'; // Asegúrate de que la ruta sea correcta según dónde tengas creada la carpeta
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.css',
+  standalone: true,
+  imports: [RouterOutlet, Pizzeria], // <-- Pizzeria debe estar aquí
   templateUrl: './app.html',
+  styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('Examen2p');
+export class App implements AfterViewInit {
+  title = 'Examen2p';
+
+  ngAfterViewInit(): void {
+    initFlowbite();
+  }
 }

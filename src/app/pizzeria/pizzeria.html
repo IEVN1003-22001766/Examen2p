@@ -1,0 +1,140 @@
+<div class="max-w-6xl mx-auto space-y-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="space-y-3">
+            <div>
+                <label class="block mb-1 text-sm font-medium">Nombre:</label>
+                <input type="text" [(ngModel)]="nombreCliente" id="nombre" name="nombre"
+                    placeholder="Ingrese el nombre" />
+            </div>
+
+            <div>
+                <label class="block mb-1 text-sm font-medium">Dirección:</label>
+                <input type="text" [(ngModel)]="direccion" id="direccion" name="direccion"
+                    placeholder="Ingrese la direccion" />
+            </div>
+
+            <div>
+                <label class="block mb-1 text-sm font-medium">Teléfono:</label>
+                <input type="text" [(ngModel)]="telefono" id="telefono" name="telefono" placeholder="477-787-23" />
+            </div>
+
+            <div>
+                <label class="block mb-1 text-sm font-medium">Correo Electronico:</label>
+                <input type="text" [(ngModel)]="correo" id="correo" name="correo" placeholder="ejemplo@gmail.com" />
+            </div>
+
+        </div>
+
+
+        <div class="flex flex-col justify-between space-y-3">
+            <div class="space-y-3">
+
+                <div>
+                    <h3 class="text-sm font-semibold px-1 my-2">Tamaño Pizza</h3>
+                    <label class="flex items-center gap-2 text-sm"><input type="radio" id="tamanio" name="tamanio"
+                            (click)="tamanioSeleccionado='Chica'; precioTamanio=40"> Chica $40.00</label>
+                    <label class="flex items-center gap-2 text-sm"><input type="radio" id="tamanio" name="tamanio"
+                            (click)="tamanioSeleccionado='Mediana'; precioTamanio=80"> Mediana $80.00</label>
+                    <label class="flex items-center gap-2 text-sm"><input type="radio" id="tamanio" name="tamanio"
+                            (click)="tamanioSeleccionado='Grande'; precioTamanio=120"> Grande $120.00</label>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-semibold px-1">Ingredientes</h4>
+                    <label class="flex items-center gap-2 text-sm"><input type="checkbox" [(ngModel)]="ingredienteJamon"
+                            (change)="actualizarIngredientes()"> Jamón $10.00</label>
+                    <label class="flex items-center gap-2 text-sm"><input type="checkbox" [(ngModel)]="ingredientePina"
+                            (change)="actualizarIngredientes()"> Piña $10.00</label>
+                    <label class="flex items-center gap-2 text-sm"><input type="checkbox"
+                            [(ngModel)]="ingredienteChampinones" (change)="actualizarIngredientes()">
+                        Champiñones $10.00</label>
+                </div>
+
+                <div>
+                    <label class="block mb-1 text-sm font-medium">Numero de Pizzas:</label>
+                    <input type="number" [(ngModel)]="numPizzas" />
+                </div>
+
+            </div>
+
+            <div class="flex justify-end">
+                <button type="button" (click)="agregarPedido()"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium text-sm px-4 py-2.5 focus:outline-none">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+        <div>
+
+            <div class="border border-gray-300 overflow-hidden">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th class="p-3">Nombre</th>
+                            <th class="p-3">Tamaño</th>
+                            <th class="p-3">Ingredientes</th>
+                            <th class="p-3">Num. Pizzas</th>
+                            <th class="p-3">Sub Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+                            <td class="p-3 font-medium text-black">Nombre</td>
+                            <td class="p-3"></td>
+                            <td class="p-3"></td>
+                            <td class="p-3"></td>
+                        </tr> -->
+
+                        <tr *ngFor="let p of pedidos" class="bg-white border-b border-gray-300">
+                            <td class="p-3 font-medium text-black">{{ p.cliente }}</td>
+                            <td class="p-3">{{ p.tamanio }}</td>
+                            <td class="p-3">{{ p.ingredientes }}</td>
+                            <td class="p-3">{{ p.numPizzas }}</td>
+                            <td class="p-3">${{ p.subTotal }}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex justify-between px-1 py-3">
+                <button
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium text-sm px-4 py-2.5 focus:outline-none">Quitar</button>
+                <button
+                    class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-4 py-2.5 focus:outline-none">Terminar</button>
+            </div>
+
+        </div>
+
+        <div class="p-2 border-2 shadow-sm flex flex-col justify-between">
+
+            <div class="p-2 relative mt-3 space-y-4">
+                <h4 class="text-lg font-semibold text-gray-900">Ventas del
+                    día</h4>
+
+                <div class="text-center space-y-2 py-2">
+                    <p class="text-lg font-bold">Mario Juarez total $550</p>
+                    <p class="text-lg font-bold">Juan Ramirez total $250</p>
+                </div>
+
+                <hr class="border-gray-400" />
+
+                <div class="text-center pb-1">
+                    <p class="text-lg font-extrabold">Ventas totales del día: $800</p>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-4">
+                <button
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium text-sm px-4 py-2.5 focus:outline-none">Ventas
+                    totales por día</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
